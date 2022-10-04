@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            //validação do preenchimento
+            $("#btn_comecar").click(function(){
+                
+                var jog1 = $("input[name=jogador1]").val();
+                var jog2 = $("input[name=jogador2]").val();
+
+               
+                if(jog1.trim().length > 0 && jog2.trim().length > 0){
+                    ComecarJogo();
+                }else{
+                    alert("Nome(s) não preenchido"); 
+                }
+
+                });
+           
+        });
+
+        
+        function ComecarJogo(){
+            var contadorClicks = 0;
+            $("table td").click(function(){
+                contadorClicks++;
+
+                if(contadorClicks <= 9){
+                    if(contadorClicks % 2 ==0){
+                    //par
+                    $(this).text("O");
+                    }else{
+                    //impar
+                    $(this).text("X");
+                    }
+                    if(VerificarGanhador() == true){
+                        contadorClicks = 9;
+                    }
+                    if(contadorClicks == 9){
+                        $("#msg").text("Jogo encerrado");
+                    }
+                }
+                            
+        });
+            }       
+
+                function VerificarGanhador(){
+                    var vencedor = [
+                    //Linhas
+                    [0,1,2],
+                    [3,4,5],
+                    [6,7,8],
+                    //Colunas
+                    [0,3,6],
+                    [1,4,7],
+                    [2,5,8],
+                    //Diagonais
+                    [0,4,8],
+                    [6,4,2]
+
+                    ];
+                    
+                    var X = new Array(9);
+                    var O = new Array(9);
+                    $("table td").each(function(key, value){
+                            if($(this).text()=="X"){
+                            X[key] = key;
+                        }
+
+                        if($(this).text()=="O"){
+                            O[key] = key;
+                        }
+                    });
+
+                   for(var i=0; i < vencedor.length; i++){
+                    for(var x=0; x < vencedor[i].length; x++);
+                   }
+
+                }
+       
+    </script>
+</head>
+<body>
+    <div class="configurador">
+<span>X</span><input type="text" name="jogador1" placeholder="Nome Jogador 1"/>
+
+x <input type="text" name="jogador2" placeholder="Nome Jogador 2"/><span>O</span>
+
+<br>
+<br>
+<button id="btn_comecar">Começar Jogo</button>
+<br>
+<div id="msg"></div>
+
+
+
+
+    </div>
+    <table>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    
+</body>
+</html>
